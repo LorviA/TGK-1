@@ -6,3 +6,4 @@ class User(BaseModel):
     password: str
     email: str
     rights: int
+

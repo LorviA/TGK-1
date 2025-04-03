@@ -12,3 +12,7 @@ class UserService:
         print(user_data)
         db_user = self.repository.create_user(user_data)
         return User(**db_user.__dict__)
+
+    def get_user(self, user_id: int) -> User:
+        db_user = self.repository.get_user(user_id)
+        return User(**db_user.__dict__) if db_user else None

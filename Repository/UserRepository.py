@@ -1,7 +1,10 @@
 from sqlalchemy.orm import Session
+from typing import List
 from DataBase.base import get_db
 from Interfaces.IUserRepository import IUserRepository
 from Models.entities import User
+from typing import Optional
+from typing import Tuple
 
 class UserRepository(IUserRepository):
     def __init__(self, db: Session):
@@ -16,3 +19,7 @@ class UserRepository(IUserRepository):
         self.db.commit()
         self.db.refresh(user)
         return user
+
+    def get_all_users(self) -> List[User]:
+        """Получить всех пользователей из БД"""
+        return self.db.query(User).all()  # SQL: SELECT * FROM users;
