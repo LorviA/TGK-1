@@ -23,3 +23,23 @@ class UserRepository(IUserRepository):
     def get_all_users(self) -> List[User]:
         """Получить всех пользователей из БД"""
         return self.db.query(User).all()  # SQL: SELECT * FROM users;
+
+    def update_user(
+            self,
+            user_id: int,
+            update_data: dict
+    ) -> Optional[User]:
+
+            # Находим пользователя
+            user = self.db.query(User).filter(User.id == user_id).first()
+            if not user:
+                return None
+
+            # Обновляем только переданные поля
+            for field, value in update_data.items():
+                if hasattr(user, field):
+                    setattr(user, field, value)
+
+            self.db.commit()
+            self.db.refresh(user)
+            return user
