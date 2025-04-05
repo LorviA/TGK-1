@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from Models.entities import DirectoryDB
+from Models.Directory import Directory
 from Dtos.Directory.CreateDirectoryDto import CreateDirectoryDto
 from Dtos.Directory.UpdateDirectoryDto import UpdateDirectoryDto
 from Repository.DirectoryRepository import DirectoryRepository
@@ -11,7 +11,7 @@ from typing import List
 router = APIRouter(prefix="/directories", tags=["directories"])
 
 
-@router.post("/", response_model=DirectoryDB, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=Directory, status_code=status.HTTP_201_CREATED)
 def create_directory(
         directory: CreateDirectoryDto,
         db: Session = Depends(get_db)
@@ -21,7 +21,7 @@ def create_directory(
     return directory_service.create_directory(directory)
 
 
-@router.get("/{directory_id}", response_model=DirectoryDB)
+@router.get("/{directory_id}", response_model=Directory)
 def get_directory(
         directory_id: int,
         db: Session = Depends(get_db)
@@ -37,7 +37,7 @@ def get_directory(
     return db_directory
 
 
-@router.get("/", response_model=List[DirectoryDB])
+@router.get("/", response_model=List[Directory])
 def get_all_directories(
         db: Session = Depends(get_db)
 ):
@@ -46,7 +46,7 @@ def get_all_directories(
     return directory_service.get_all_directories()
 
 
-@router.patch("/{directory_id}", response_model=DirectoryDB)
+@router.patch("/{directory_id}", response_model=Directory)
 def update_directory(
         directory_id: int,
         update_data: UpdateDirectoryDto,
