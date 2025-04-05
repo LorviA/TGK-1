@@ -5,3 +5,5 @@ class Directory(BaseModel):
     name: str
     value: str
 
+    class Config:
+        from_attributes = True
