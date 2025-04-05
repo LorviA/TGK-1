@@ -4,3 +4,4 @@ class Directory(BaseModel):
     id: int
     name: str
     value: str
+

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from Models.Directory import Directory
+from Models.DIRECTORY import Directory
+from Models.entities import DirectoryDB
 from Dtos.Directory.CreateDirectoryDto import CreateDirectoryDto
 from Dtos.Directory.UpdateDirectoryDto import UpdateDirectoryDto
 from Repository.DirectoryRepository import DirectoryRepository
@@ -9,7 +10,6 @@ from DataBase.base import get_db
 from typing import List
 
 router = APIRouter(prefix="/directories", tags=["directories"])
-
 
 @router.post("/", response_model=Directory, status_code=status.HTTP_201_CREATED)
 def create_directory(

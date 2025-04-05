@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
 from Models.entities import DirectoryDB
+from typing import List, Optional
 
 class IDirectoryRepository(ABC):
     @abstractmethod

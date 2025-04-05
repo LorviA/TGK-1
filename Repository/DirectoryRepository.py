@@ -1,10 +1,9 @@
 from sqlalchemy.orm import Session
-from typing import List
-from DataBase.base import get_db
 from Interfaces.IDirectoryRepository import IDirectoryRepository
 from Models.entities import DirectoryDB
 from typing import Optional
-from typing import Tuple
+from typing import List
+
 
 class DirectoryRepository(IDirectoryRepository):
     def __init__(self, db: Session):
@@ -43,4 +42,3 @@ class DirectoryRepository(IDirectoryRepository):
             self.db.delete(directory)
             self.db.commit()
             return True
-        return False
