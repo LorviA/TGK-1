@@ -37,3 +37,10 @@ class ZNO(Base):
     create_data = Column(Date)
     id_oko = Column(Integer)
 
+
+class DirectoryDB(Base):
+    __tablename__ = 'directories'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    value = Column(String)
