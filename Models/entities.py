@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Date, Float
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Boolean, Date, Float, JSON
 from DataBase.base import Base
 
 class User(Base):
@@ -37,3 +36,10 @@ class ZNO(Base):
     create_data = Column(Date)
     id_oko = Column(Integer)
 
+
+class DirectoryDB(Base):
+    __tablename__ = 'directories'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    value = Column(JSON)

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from Models.entities import ZNO
 from typing import List, Optional
+
 class IZNORepository(ABC):
     @abstractmethod
     def create_zno(self, zno_data: dict) -> ZNO:
