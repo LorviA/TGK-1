@@ -1,6 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Date, Float
-from sqlalchemy.dialects.postgresql import JSON
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Boolean, Date, Float, JSON
 from DataBase.base import Base
 
 class User(Base):
@@ -44,4 +42,4 @@ class DirectoryDB(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    value = Column(String)
+    value = Column(JSON)
