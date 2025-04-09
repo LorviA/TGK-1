@@ -50,20 +50,6 @@ def get_all_directories(
     return service.get_all_directories()
 
 
-@router.get("/type/{directory_type}", response_model=List[Directories])
-async def get_directories_by_type(
-        directory_type: str,
-        service: DirectoryService = Depends(get_directory_service)
-):
-    if directory_type not in ["ConfidentialityOfInformation", "StSmet"]:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Недопустимый тип справочника"
-        )
-
-    return service.get_directories_by_type(directory_type)
-
-
 @router.patch("/{directory_id}", response_model=Directories)  # Используйте вашу Pydantic модель
 async def update_directory(
     directory_id: int,

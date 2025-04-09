@@ -20,9 +20,6 @@ class DirectoryRepository(IDirectoryRepository):
     def get_all_directories(self) -> List[StSmet]:
         return self.db.query(StSmet).all()
 
-    def get_directories_by_type(self, directory_type: str) -> List[StSmet]:
-        return self.db.query(StSmet) .filter(StSmet.directory_type == directory_type) .all()
-
     def update_directory(self, directory_id: int, update_data: dict) -> Optional[StSmet]:
         directory = self.get_directory(directory_id)
         if not directory:
