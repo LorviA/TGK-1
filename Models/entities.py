@@ -37,9 +37,17 @@ class ZNO(Base):
     id_oko = Column(Integer)
 
 
-class DirectoryDB(Base):
-    __tablename__ = 'directories'
+class ConfidentialityOfInformation(Base):
+    __tablename__ = 'ConfidentialityOfInformation'
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    value = Column(JSON)
+
+
+class StSmet(Base):
+    __tablename__ = 'StSmet'
+
+    id = Column(Integer, primary_key=True)
+    st = Column(String)
+    description = Column(String)
+    is_group = Column(Boolean)
