@@ -22,3 +22,11 @@ class IZNORepository(ABC):
     @abstractmethod
     def delete_zno(self, zno_id: int) -> bool:
         pass
+
+    @abstractmethod
+    def apply_sorting(self, query, column_name: str, sort_order: str = 'desc') -> List[ZNO]:
+        pass
+
+    @abstractmethod
+    def get_filtered_zno(self, filters: dict) -> List[ZNO]:
+        pass
