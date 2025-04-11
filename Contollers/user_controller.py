@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
+from typing import Optional, Dict
 from Models.User import User
 from Dtos.User.CreateUserDto import CreateUserDto
 from Models.UserUpdate import UserUpdate
@@ -82,4 +83,24 @@ def delete_user(
             detail=message
         )
     return None  # 204 No Content
+
+
+@router.get("/by-username/{user_name}", response_model=User)
+def get_user_by_username(user_name: str,db: Session = Depends(get_db)):
+    """
+    Получение пользователя по логину
+
+    Возвращает:
+        - 200 с данными пользователя если найден
+        - 404 если пользователь не существует
+    """
+    user_repository = UserRepository(db)
+    user = user_repository.get_user_by_username(user_name)
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Пользователь с логином '{user_name}' не найден"
+        )
+    return user
+
 

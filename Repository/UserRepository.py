@@ -5,6 +5,9 @@ from Interfaces.IUserRepository import IUserRepository
 from Models.entities import User
 from typing import Optional
 from typing import Tuple
+from fastapi import APIRouter, Query, Depends
+from typing import Optional, Dict
+from sqlalchemy import asc, desc
 
 class UserRepository(IUserRepository):
     def __init__(self, db: Session):
@@ -43,3 +46,17 @@ class UserRepository(IUserRepository):
             self.db.commit()
             self.db.refresh(user)
             return user
+
+    def get_user_by_username(self, user_name: str) -> Optional[User]:
+        """
+        Получает пользователя по логину
+
+        Args:
+            username: Логин пользователя
+
+        Returns:
+            User | None: Объект пользователя или None если не найден
+        """
+        return self.db.query(User) \
+            .filter(User.user_name == user_name) \
+            .first()
