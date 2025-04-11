@@ -1,6 +1,8 @@
 from Interfaces.IZNORepository import IZNORepository
 from sqlalchemy.orm import Query
 from Models.entities import ZNO
+from sqlalchemy.orm import Session
+import pandas as pd
 from Dtos.ZNO.CreateZNODto import CreateZNODto
 from Dtos.ZNO.FilterZNODto import FilterZNODto
 from typing import Optional, List
@@ -33,3 +35,50 @@ class ZNOService:
 
     def get_filtered_zno(self, filters: dict) -> List[ZNO]:
         return self.repository.get_filtered_zno(filters)
+
+def update_zno_payments_from_excel(file, db: Session) -> dict:
+    import pandas as pd
+
+    df = pd.read_excel(file)
+    updated = []
+
+    for _, row in df.iterrows():
+        id_zno = str(row.get("N Заявки")).strip()
+        payment_date = row.get("Дата документа П/П(ПУР)")
+        payment_number = row.get("Номер П/П (ПУР)")
+        status_code = row.get("Статус")
+
+        if not id_zno or pd.isna(payment_date) or pd.isna(payment_number):
+            continue
+
+        zno = db.query(ZNO).filter(ZNO.id_zno == id_zno).first()
+        if zno:
+            zno.payment_date = pd.to_datetime(payment_date).date()
+            zno.id_payment_order = str(payment_number)
+            if not pd.isna(status_code):
+                zno.id_status = int(status_code)
+            updated.append(id_zno)
+
+    db.commit()
+    return {
+        "message": f"Обновлено заявок: {len(updated)}",
+        "заявки": updated
+    }
+
+
+def update_smsps_from_excel(file, db: Session) -> dict:
+    df = pd.read_excel(file)
+    updated = []
+    for _, row in df.iterrows():
+        id_case = str(row.get("ИД. случая")).strip()
+        smsp_flag = str(row.get("Отнесение контрагента к СМСП")).strip().lower()
+
+        if not id_case or smsp_flag not in ["да", "нет"]:
+            continue
+
+        zno = db.query(ZNO).filter(ZNO.id_case == id_case).first()
+        if zno:
+            zno.is_mal_or_sred_bis = smsp_flag == "да"
+            updated.append(id_case)
+    db.commit()
+    return {"message": f"Обновлено СМСП статусов: {len(updated)}", "случаи": updated}
