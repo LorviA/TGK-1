@@ -53,6 +53,9 @@ class ZNORepository(IZNORepository):
         return self.db.query(ZNO).all()
 
     def update_zno(self, zno_id: int, update_data: dict) -> ZNO:
+        user = update_data.get("author")
+        update_data.pop("author")
+
         zno = self.db.query(ZNO).filter(ZNO.id == zno_id).first()
 
         if not zno:
@@ -64,7 +67,7 @@ class ZNORepository(IZNORepository):
 
         self.db.commit()
         self.db.refresh(zno)
-        self.newLog(zno, 2)
+        self.newLogUpdate(zno,user,2)
         return zno
 
     def delete_zno(self, zno_id: int) -> bool:
@@ -199,6 +202,24 @@ class ZNORepository(IZNORepository):
 
         if (numer == 3):
             logger.message = "Удалил ЗНО номер " + str(zno.id)
+            logger.date_change = date.today()
+            self.db.add(logger)
+            self.db.commit()
+            self.db.refresh(logger)
+        return
+
+    def newLogUpdate(self, zno: ZNO, author: int, numer: int):
+        logger = Logger()
+        logger.user_id = author
+        if (numer == 1):
+            logger.message = "Создал ЗНО номер " + str(zno.id)
+            logger.date_change = date.today()
+            self.db.add(logger)
+            self.db.commit()
+            self.db.refresh(logger)
+
+        if (numer == 2):
+            logger.message = "Изменил ЗНО номер " + str(zno.id)
             logger.date_change = date.today()
             self.db.add(logger)
             self.db.commit()

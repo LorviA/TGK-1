@@ -24,3 +24,4 @@ class UpdateZNODto(BaseModel):
     id_user: Optional[int] = None
     create_data: Optional[date] = None
     id_oko: Optional[int] = None
+    author: Optional[int] = None
