@@ -8,7 +8,7 @@ class User(Base):
     password = Column(String)
     email = Column(String)
     rights = Column(Integer)
-
+    expiration_date = Column(Date, nullable=True)
 
 class ZNO(Base):
     __tablename__ = "zno"
@@ -42,6 +42,8 @@ class ConfidentialityOfInformation(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    is_archived = Column(Boolean, default=False)
+    expiration_date = Column(Date, nullable=True)  # Добавлено
 
 
 class StSmet(Base):
@@ -51,6 +53,8 @@ class StSmet(Base):
     st = Column(String)
     description = Column(String)
     is_group = Column(Boolean)
+    is_archived = Column(Boolean, default=False)
+    expiration_date = Column(Date, nullable=True)  # Добавлено
 
 class Logger(Base):
     __tablename__ = "Logger"

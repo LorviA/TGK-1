@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import date
-
+from typing import Optional
 class CreateZNODto(BaseModel):
     st_smet: float
     counterparty: str
@@ -18,8 +18,8 @@ class CreateZNODto(BaseModel):
     comment: str
     id_status: int
     id_zno: str
-    payment_date: date
-    id_payment_order: str
+    payment_date: Optional[date]
+    id_payment_order: Optional[str]
     id_user: int
     create_data: date
     id_oko: int

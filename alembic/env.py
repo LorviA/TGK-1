@@ -7,7 +7,7 @@ from alembic import context
 
 from DataBase.base import Base
 from Models.entities import User, ZNO  # Базовые модели
-from Models.Directory import Directory  # Основная модель справочника
+#from Models.Directory import Directory  # Основная модель справочника
 from Models.User import User as UserModel  # Дополнительные модели
 from Models.ZNO import ZNO as ZNOModel
 
