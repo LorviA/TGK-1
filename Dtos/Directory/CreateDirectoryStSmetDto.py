@@ -5,3 +5,4 @@ class CreateDirectoryStSmetDto(BaseModel):
     st: Optional[str] = None
     description: Optional[str] = None
     is_group: Optional[bool] = None
+    user_id: Optional[int] = None

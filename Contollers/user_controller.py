@@ -36,7 +36,6 @@ def read_user(
 def get_all_users(
     db: Session = Depends(get_db)
 ):
-    """Получить список всех пользователей"""
     user_repository = UserRepository(db)
     return user_repository.get_all_users()
 

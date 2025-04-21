@@ -2,12 +2,13 @@ from sqlalchemy.orm import Session
 from typing import List
 from DataBase.base import get_db
 from Interfaces.IUserRepository import IUserRepository
-from Models.entities import User
+from Models.entities import User, Logger
 from typing import Optional
 from typing import Tuple
 from fastapi import APIRouter, Query, Depends
 from typing import Optional, Dict
 from sqlalchemy import asc, desc
+from datetime import date
 
 class UserRepository(IUserRepository):
     def __init__(self, db: Session):
@@ -21,10 +22,11 @@ class UserRepository(IUserRepository):
         self.db.add(user)
         self.db.commit()
         self.db.refresh(user)
+
+        self.newLog(user, 1)
         return user
 
     def get_all_users(self) -> List[User]:
-        """Получить всех пользователей из БД"""
         return self.db.query(User).all()  # SQL: SELECT * FROM users;
 
     def update_user(
@@ -45,18 +47,30 @@ class UserRepository(IUserRepository):
 
             self.db.commit()
             self.db.refresh(user)
+
+            self.newLog(user, 2)
             return user
 
     def get_user_by_username(self, user_name: str) -> Optional[User]:
-        """
-        Получает пользователя по логину
-
-        Args:
-            username: Логин пользователя
-
-        Returns:
-            User | None: Объект пользователя или None если не найден
-        """
         return self.db.query(User) \
             .filter(User.user_name == user_name) \
             .first()
+
+    def newLog(self, user: User, numer: int):
+
+        logger = Logger()
+        logger.user_id = 1
+        if(numer == 1):
+            logger.message = "Создал пользователя " + str(user.user_name)
+            logger.date_change = date.today()
+            self.db.add(logger)
+            self.db.commit()
+            self.db.refresh(logger)
+
+        if(numer == 2):
+            logger.message = "Изменил данные пользователя " + str(user.user_name)
+            logger.date_change = date.today()
+            self.db.add(logger)
+            self.db.commit()
+            self.db.refresh(logger)
+        return

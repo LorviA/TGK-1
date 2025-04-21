@@ -1,8 +1,9 @@
 from sqlalchemy.orm import Session,Query
 from sqlalchemy import asc, desc, cast, Numeric
-from Models.entities import ZNO
+from Models.entities import ZNO, Logger
 from Interfaces.IZNORepository import IZNORepository
 from typing import List, Optional
+from datetime import date
 
 class ZNORepository(IZNORepository):
     def __init__(self, db: Session):
@@ -41,6 +42,8 @@ class ZNORepository(IZNORepository):
         self.db.add(zno)
         self.db.commit()
         self.db.refresh(zno)
+
+        self.newLog(zno, 1)
         return zno
 
     def get_zno(self, zno_id: int) -> Optional[ZNO]:
@@ -61,6 +64,7 @@ class ZNORepository(IZNORepository):
 
         self.db.commit()
         self.db.refresh(zno)
+        self.newLog(zno, 2)
         return zno
 
     def delete_zno(self, zno_id: int) -> bool:
@@ -70,6 +74,7 @@ class ZNORepository(IZNORepository):
 
         self.db.delete(zno)
         self.db.commit()
+        self.newLog(zno, 3)
         return True
 
     def get_base_query(self) -> Query:
@@ -172,3 +177,30 @@ class ZNORepository(IZNORepository):
             query = query.filter(ZNO.summ <= filters['summ_max'])
 
         return query.order_by(ZNO.planned_payment_date.desc()).all()
+
+
+    def newLog(self, zno: ZNO, numer: int):
+
+        logger = Logger()
+        logger.user_id = zno.id_user
+        if(numer == 1):
+            logger.message = "Создал ЗНО номер " + str(zno.id)
+            logger.date_change = date.today()
+            self.db.add(logger)
+            self.db.commit()
+            self.db.refresh(logger)
+
+        if(numer == 2):
+            logger.message = "Изменил ЗНО номер " + str(zno.id)
+            logger.date_change = date.today()
+            self.db.add(logger)
+            self.db.commit()
+            self.db.refresh(logger)
+
+        if (numer == 3):
+            logger.message = "Удалил ЗНО номер " + str(zno.id)
+            logger.date_change = date.today()
+            self.db.add(logger)
+            self.db.commit()
+            self.db.refresh(logger)
+        return

@@ -51,3 +51,11 @@ class StSmet(Base):
     st = Column(String)
     description = Column(String)
     is_group = Column(Boolean)
+
+class Logger(Base):
+    __tablename__ = "Logger"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer)
+    message = Column(String)
+    date_change = Column(Date)
