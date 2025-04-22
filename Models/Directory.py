@@ -1,24 +1,22 @@
 from pydantic import BaseModel
-
+from typing import Optional
+from datetime import date
 class DirectoryConfidentialityOfInformation(BaseModel):
-    __tablename__ = 'ConfidentianalityOfInformation'
-
     id: int
     name: str
+    is_archived: bool = False
+    expiration_date: Optional[date] = None  # Добавлено
 
     class Config:
         from_attributes = True
 
-
 class DirectoryStSmet(BaseModel):
-    __tablename__ = 'StSmet'
-
     id: int
     st: str
     description: str
     is_group: bool
+    is_archived: bool = False
+    expiration_date: Optional[date] = None  # Добавлено
 
     class Config:
         from_attributes = True
-
-

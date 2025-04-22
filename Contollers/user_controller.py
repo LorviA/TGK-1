@@ -8,13 +8,16 @@ from Repository.UserRepository import UserRepository
 from Services.user_service import UserService
 from DataBase.base import get_db
 from typing import List
+from Models.entities import User as UserModel
+from datetime import date
+from Dtos.User.set_expiration_dto import SetExpirationDateDto
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 @router.post("/", response_model=User)
 def create_user(
     user: CreateUserDto,
-   db: Session = Depends(get_db)
+    db: Session = Depends(get_db)
 ):
     user_repository = UserRepository(db)
     user_service = UserService(user_repository)
@@ -102,4 +105,25 @@ def get_user_by_username(user_name: str,db: Session = Depends(get_db)):
         )
     return user
 
+@router.post("/users/set-expiration/")
+def set_users_expiration(dto: SetExpirationDateDto, db: Session = Depends(get_db)):
+    users = db.query(UserModel).all()
+    for user in users:
+        user.expiration_date = dto.expiration_date
+    db.commit()
+    return {"message": f"Дата архивирования {dto.expiration_date} установлена для {len(users)} пользователей"}
 
+@router.post("/archive-expired/")
+def archive_expired_users(db: Session = Depends(get_db)):
+    today = date.today()
+    users = db.query(UserModel).filter(
+        UserModel.expiration_date != None,
+        UserModel.expiration_date <= today,
+        UserModel.rights != 4
+    ).all()
+
+    for user in users:
+        if user.rights != 1:
+            user.rights = 4  # Архивный пользователь
+    db.commit()
+    return {"message": f"В архив переведено пользователей: {len(users)}"}

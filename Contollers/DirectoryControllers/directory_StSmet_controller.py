@@ -7,8 +7,8 @@ from Repository.DirectoryRepository.DirectoryStSmetRepository import DirectoryRe
 from Services.directory_StSmet_services import DirectoryService
 from DataBase.base import get_db
 from typing import List
-
-
+from Dtos.Directory.ArchiveDirectory import ArchiveDirectoryDto
+from Dtos.Directory.SetDirectoryExpirationDateDto import SetDirectoryExpirationDateDto
 router = APIRouter(prefix="/DirectoriesStSmet", tags=["DirectoriesStSmet"])
 
 def get_directory_service(db: Session = Depends(get_db)) -> DirectoryService:
@@ -72,3 +72,40 @@ def delete_directory(
             detail="Справочник не найден"
         )
     return None
+
+@router.patch("/archive/{directory_id}")
+def archive_directory(
+    directory_id: int,
+    archive_data: ArchiveDirectoryDto,
+    service: DirectoryService = Depends(get_directory_service)
+):
+    updated = service.archive_directory(directory_id, archive_data.is_archived)
+    if not updated:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Справочник не найден"
+        )
+    return updated
+@router.post("/set-expiration/")
+def set_directories_expiration(
+    dto: SetDirectoryExpirationDateDto,
+    db: Session = Depends(get_db)
+):
+    service = get_directory_service(db)
+    service.set_expiration_for_all(dto.expiration_date)
+    return {"message": f"Дата архивирования {dto.expiration_date} установлена для всех справочников"}
+
+@router.post("/archive-expired/")
+def archive_expired_directories(
+    db: Session = Depends(get_db)
+):
+    service = get_directory_service(db)
+    archived_count = service.archive_expired()
+    return {"message": f"В архив переведено справочников: {archived_count}"}
+
+@router.get("/archived/", response_model=List[Directories])
+def get_archived_directories(
+    service: DirectoryService = Depends(get_directory_service)
+):
+    """Получить все архивные записи справочника"""
+    return service.get_archived_directories()
