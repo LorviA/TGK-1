@@ -93,12 +93,19 @@ class DirectoryRepository(IDirectoryRepository):
         self.db.refresh(directory)
         return directory
 
-    def set_expiration_for_all(self, expiration_date: date):
-        directories = self.db.query(self.model).all()
+    def set_expiration_for_all(self, expiration_date: date) -> int:
+
+        directories = self.db.query(self.model).filter(
+            self.model.expiration_date.is_(None)
+        ).all()
+
+        updated_count = 0
         for directory in directories:
             directory.expiration_date = expiration_date
+            updated_count += 1
+
         self.db.commit()
-        return len(directories)
+        return updated_count
 
     def archive_expired(self) -> int:
         today = date.today()

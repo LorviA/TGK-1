@@ -27,8 +27,12 @@ class DirectoryService:
     def archive_directory(self, directory_id: int, is_archived: bool) -> Optional[StSmet]:
         return self.repository.archive_directory(directory_id, is_archived)
 
-    def set_expiration_for_all(self, expiration_date: date):
-        return self.repository.set_expiration_for_all(expiration_date)
+    def set_expiration_for_all(self, expiration_date: date) -> dict:
+        updated_count = self.repository.set_expiration_for_all(expiration_date)
+        return {
+            "message": f"Дата архивирования установлена для {updated_count} новых записей",
+            "updated_count": updated_count
+        }
 
     def archive_expired(self) -> int:
         return self.repository.archive_expired()
