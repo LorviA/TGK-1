@@ -92,11 +92,10 @@ def archive_directory(
 @router.post("/set-expiration/")
 def set_directories_expiration(
     dto: SetDirectoryExpirationDateDto,
-    db: Session = Depends(get_db)
+    service: DirectoryService = Depends(get_directory_service)
 ):
-    service = get_directory_service(db)
-    service.set_expiration_for_all(dto.expiration_date)
-    return {"message": f"Дата архивирования {dto.expiration_date} установлена для всех справочников"}
+    result = service.set_expiration_for_all(dto.expiration_date)
+    return result
 
 @router.post("/archive-expired/")
 def archive_expired_directories(

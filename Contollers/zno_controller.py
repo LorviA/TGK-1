@@ -9,9 +9,19 @@ from typing import List,Optional
 from Models.entities import ZNO
 from Dtos.ZNO.UpdateZNODto import UpdateZNODto
 from datetime import date
-
+from fastapi import APIRouter, UploadFile, File, Depends
+from Services.zno_service import update_zno_payments_from_excel, update_smsps_from_excel
 router = APIRouter(prefix="/zno", tags=["zno"])
 
+@router.post("/upload-zno-payment/")
+async def upload_zno_payment(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    updated = update_zno_payments_from_excel(file.file, db)
+    return {"message": f"Обновлено заявок: {updated}"}
+
+@router.post("/upload-smsps/")
+async def upload_smsps(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    updated = update_smsps_from_excel(file.file, db)
+    return {"message": f"Обновлено записей СМСП: {updated}"}
 @router.post("/", response_model=ZNOResponse)
 def create_zno(
     zno: CreateZNODto,

@@ -1,0 +1,132 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.report-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 101;
+  width: 350px;
+}
+
+.report-modal h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  text-align: center;
+  color: #333;
+}
+
+.period-selector {
+  margin-bottom: 15px;
+}
+
+.period-options {
+  display: flex;
+  background: #c4c0c0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.period-option {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.period-option.active {
+  background: #0b7dda;
+  color: white;
+  font-weight: bold;
+}
+
+.date-range {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.date-input {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.date-input label {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.narrow-date {
+  width: 110px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.action-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 80px;
+}
+
+.close-btn {
+   position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #718096;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #2d3748;
+}
+
+.confirm {
+  background-color: #2196f3 !important;
+  color: white;
+}
+
+.confirm:hover {
+  background-color: #0b7dda !important;
+}
+
+.confirm:disabled {
+  background: #757373;
+  cursor: not-allowed;
+}
+
