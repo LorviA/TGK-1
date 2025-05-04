@@ -1,0 +1,45 @@
+.archive-modal-table {
+  margin-top: 20px;
+}
+
+.ant-modal-body {
+  padding: 20px 24px;
+}
+
+.ant-table-thead > tr > th {
+  background-color: #fafafa;
+  font-weight: 600;
+}
+
+.ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ant-table-container {
+  border: 1px solid #f0f0f0;
+}
+
+.ant-modal {
+  z-index: 1002 !important;
+}
+
+.ant-modal-mask {
+  z-index: 1001 !important;
+  background-color: rgba(0, 0, 0, 0.45) !important;
+}
+
+.ant-modal-wrap {
+  z-index: 1002 !important;
+}
+
+
+.ant-input {
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.ant-input:focus {
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+

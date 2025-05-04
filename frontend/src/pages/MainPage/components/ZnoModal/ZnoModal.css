@@ -1,0 +1,401 @@
+.zno-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.zno-modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc #f1f1f1;
+  border-radius: 15px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0);
+  padding: 2rem;
+  z-index: 1001;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.zno-modal-container h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 24px;
+  color: #333;
+  position: relative;
+}
+
+.zno-modal-form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  gap: 6px;
+}
+
+.zno-modal-grouped {
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.zno-modal-form-row label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap;
+}
+
+.zno-modal-form-row input,
+.zno-modal-form-row select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.zno-modal-grouped > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+.zno-modal-form-row:first-child.zno-modal-grouped > div {
+  flex: 1;
+}
+.zno-modal-form-row:first-child.zno-modal-grouped > div:first-child {
+  flex: 0.8;
+}
+.zno-modal-form-row:first-child.zno-modal-grouped > div:last-child {
+  flex: 1.2;
+}
+
+
+.zno-modal-form-row:nth-child(5).zno-modal-grouped > div {
+  flex: 1;
+}
+.zno-modal-form-row:nth-child(5).zno-modal-grouped > div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+
+.zno-modal-warning {
+  color: #d9534f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+
+.date-with-overdue {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.overdue-badge {
+  color: #d32f2f;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+
+.zno-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 1.5rem;
+}
+
+.zno-modal-cancel-btn,
+.zno-modal-save-btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.zno-modal-cancel-btn {
+  background-color: #f0f0f0;
+  color: #333;
+}
+.zno-modal-cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.zno-modal-save-btn {
+  background-color: #007bff;
+  color: white;
+}
+.zno-modal-save-btn:hover {
+  background-color: #0069d9;
+}
+
+
+.zno-modal-close-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+ font-size: 1.5rem;
+  cursor: pointer;
+  color: #718096;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+.zno-modal-close-icon:hover {
+  color: #333;
+}
+
+.st-smet-combobox {
+  position: relative;
+  width: 100%;
+
+}
+
+.st-smet-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 10px;
+  line-height: 1.5;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+
+.st-smet-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 300px;
+  overflow-y: scroll;
+  background: #fff;
+  border: 1px solid #000;
+  z-index: 10000;
+
+
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+
+.st-smet-dropdown::-webkit-scrollbar {
+  width: 8px;
+  background: #f0f0f0;
+}
+
+.st-smet-dropdown::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border: 1px solid #a0a0a0;
+}
+
+
+.st-smet-group-header {
+  padding: 8px 12px;
+  background: #e0e0e0;
+  border-bottom: 1px solid #000;
+  font-weight: 600;
+  color: #000;
+  position: sticky;
+  top: 0;
+}
+
+.st-smet-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.st-smet-number {
+  width: 60px;
+  font-weight: 600;
+  color: #0066cc;
+}
+
+.st-smet-description {
+  flex: 1;
+  color: #000;
+}
+
+
+.st-smet-item:hover {
+  background: #f5f5f5 !important;
+  outline: 1px solid #ddd;
+}
+
+
+@media (max-width: 768px) {
+  .zno-modal-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .zno-modal-grouped {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .zno-modal-form-row:first-child.zno-modal-grouped > div,
+  .zno-modal-form-row:nth-child(5).zno-modal-grouped > div {
+    flex: 1 1 100% !important;
+    width: 100%;
+  }
+
+  .date-with-overdue {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+.zno-modal-form-row:nth-child(5).zno-modal-grouped {
+  align-items: flex-end;
+}
+
+.zno-modal-form-row:nth-child(5).zno-modal-grouped > div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 36px;
+}
+
+
+.business-status-toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-left: 12px;
+  height: 100%;
+}
+
+.business-status-toggle:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 2px;
+  background-color: #dc3545;
+  transition: all 0.3s ease;
+}
+
+.business-status-toggle.checked:before {
+  background-color: #28a745;
+}
+
+.business-status-label {
+  font-size: 14px;
+  color: #555;
+  padding-bottom: 2px;
+}
+
+.business-status-text {
+  font-size: 13px;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.business-status-toggle.checked .business-status-text {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.half-width-input {
+  width: 70% !important;
+}
+
+.payment-status {
+  font-size: 13px;
+  font-weight: 400;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-left: 10px;
+}
+
+.payment-status.overdue {
+  color: #d32f2f;
+  background-color: rgba(211, 47, 47, 0.1);
+}
+
+.payment-status.early {
+  color: #388e3c;
+  background-color: rgba(56, 142, 60, 0.1);
+}
+
+.payment-status.ontime {
+  color: #1976d2;
+  background-color: rgba(25, 118, 210, 0.1);
+}
+
+.zno-modal-form-row input:disabled,
+.zno-modal-form-row select:disabled {
+  background-color: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
+}
+
+
+/* Стиль для поля № п/п */
+.zno-modal-form-row input[disabled]:not([value='Авто']) {
+  cursor: default;
+  background-color: transparent;
+}
+
+.disabled-zno-field {
+  background-color: #f5f5f5 !important;
+  color: #666 !important;
+  cursor: not-allowed !important;
+  border-color: #ddd !important;
+}
+
+.zno-modal-delete-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #dc3545;
+  padding: 8px;
+
+  transition: all 0.2s ease;
+}
+
+.zno-modal-delete-btn:hover {
+  background-color: rgba(255, 0, 0, 0.4);
+  border-radius: 5px;
+  color: white;
+  transform: scale(1.1);
+}
