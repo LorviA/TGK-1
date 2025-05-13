@@ -59,9 +59,6 @@ const PanelActions = ({ selectedAppId, onForceRefreshTable }) => {
       // Получаем заявку по ID через API
       const selectedZno = await getZnoById(selectedAppId);
 
-      // Проверка прав и статуса заявки
-      const userId = authData.id;
-
       // ограничение редактирования для ОКО
       if (userRights === 2 && (![0, 1, 2, 3].includes(selectedZno.id_status))) {
         alert('Редактирование заявки запрещено для вас.');
