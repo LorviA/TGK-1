@@ -63,13 +63,13 @@ const PanelActions = ({ selectedAppId, onForceRefreshTable }) => {
       const userId = authData.id;
 
       // ограничение редактирования для ОКО
-      if (userRights === 2 && (![0, 1, 2].includes(selectedZno.id_status))) {
+      if (userRights === 2 && (![0, 1, 2, 3].includes(selectedZno.id_status))) {
         alert('Редактирование заявки запрещено для вас.');
         return;
       }
 
       // ограничение редактирования для работника
-      if (userRights === 3 && (selectedZno.id_user !== userId || ![0, 1, 2].includes(selectedZno.id_status))) {
+      if (userRights === 3 && (![0, 1, 2].includes(selectedZno.id_status))) {
         alert('Редактирование заявки запрещено для вас.');
         return;
       }
