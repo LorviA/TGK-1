@@ -274,7 +274,7 @@ const useZnoForm = ({ isEditMode,isCopyMode = false, selectedZnoId, onClose }) =
     str_bill: formData.str_bill || "",
     other_documents: formData.other_documents || "",
     comment: formData.comment || "",
-    id_status: rights === 3 ? 0 : Number(formData.id_status) || 0,
+    id_status: Number(formData.id_status) || 0,
     id_zno: formData.id_zno || "",
     payment_date: formData.payment_date || null,
     id_payment_order: formData.id_payment_order || "",
