@@ -23,7 +23,40 @@ const ZnoForm = ({
   handleDelete
 }) => {
 
+  const [initialStatus, setInitialStatus] = React.useState(null);
+  const [isStatusEnabled, setIsStatusEnabled] = React.useState(false);
+
+  // Ждем пока статус станет числом > 0
+  React.useEffect(() => {
+    if (isEditMode && initialStatus === null) {
+      const status = Number(formData.id_status);
+      if (status > 0) {
+        setInitialStatus(status);
+        console.log('Initial status set:', status);
+      }
+    }
+  }, [formData.id_status, isEditMode, initialStatus]);
+
+  // Обновляем доступность поля
+  React.useEffect(() => {
+    if (initialStatus !== null) {
+      const enabled = Number(rights) === 3 && initialStatus === 2;
+      setIsStatusEnabled(enabled);
+      console.log('Status enabled:', enabled, 'for initial:', initialStatus);
+    }
+  }, [initialStatus, rights]);
+
+  console.log('Current state:', {
+    rights,
+    initialStatus,
+    currentStatus: formData.id_status,
+    isStatusEnabled,
+    isEditMode
+  });
+
   const renderInput = (field, isReadonly = false) => {
+
+
     if (field.name === 'planned_payment_date') {
       return (
         <div className="date-with-overdue">
@@ -143,23 +176,36 @@ const ZnoForm = ({
       <div className="zno-modal-form-row zno-modal-grouped">
         <div style={{ flex: '1' }}>
           <label>№ п/п:</label>
-          <input value={formData.id || 'Авто'} disabled />
+          <input value={formData.id || 'Авто'} disabled className={readonly ? "disabled-zno-field" : ""}/>
         </div>
         <div style={{ flex: '1' }}>
-          <label>Статус:</label>
-          <select
-            name="id_status"
-            value={formData.id_status || ''}
-            onChange={handleChange}
-            disabled={readonly}
-          >
-            {ZNO_STATUSES.map(opt => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
+  <label>Статус:</label>
+  <select
+    name="id_status"
+    value={formData.id_status || ''}
+    onChange={handleChange}
+    disabled={!isStatusEnabled && rights !== 1 && rights !== 2}
+  >
+    {(rights === 1 || rights === 2) ? (
+      ZNO_STATUSES.map(opt => (
+        <option key={opt.value} value={opt.value}>
+          {opt.label}
+        </option>
+      ))
+    ) : isStatusEnabled ? (
+      <>
+        <option value={2}>На доработке</option>
+        <option value={1}>Сформ ЗНО</option>
+      </>
+    ) : (
+      ZNO_STATUSES.map(opt => (
+        <option key={opt.value} value={opt.value}>
+          {opt.label}
+        </option>
+      ))
+    )}
+  </select>
+</div>
         <div style={{ flex: '1' }}>
           <label>№ ЗНО:</label>
           <input
@@ -339,6 +385,8 @@ const ZnoForm = ({
             type="date"
             name="payment_date"
             value={formData.payment_date || ''}
+            disabled={readonly}
+            className={readonly ? "disabled-zno-field" : ""}
             onChange={handleChange}
           />
         </div>
@@ -348,6 +396,8 @@ const ZnoForm = ({
             type="text"
             name="id_payment_order"
             value={formData.id_payment_order || ''}
+            disabled={readonly}
+            className={readonly ? "disabled-zno-field" : ""}
             onChange={handleChange}
           />
         </div>
